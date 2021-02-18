@@ -1,0 +1,86 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/gist/index",
+			"style": {
+				"navigationBarTitleText": "我执"
+			}
+		}
+	    ,{
+            "path" : "pages/hold/hold",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "我执",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/star/index",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "星月",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/plan/index",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "计划",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/plan/addition",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "计划-添加",
+                "enablePullDownRefresh": false
+            }
+            
+        },{
+            "path" : "pages/plan/information",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "计划-信息",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+    ],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "我执",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	},
+	"tabBar": {
+		"color":"#222",
+		"selectedColor":"#007AFF",
+		"backgroundColor":"#FFF",
+		"borderStyle":"#222",
+		"list": [
+			{
+				"pagePath":"pages/star/star",
+				"text":"星月",
+				"iconPath":"static/star.png",
+				"selectedIconPath":"static/star-selected.png"
+			},
+			{
+				"pagePath":"pages/plan/index",
+				"text": "计划",
+				"iconPath":"static/plan.png",
+				"selectedIconPath":"static/plan-selected.png"
+			},
+			{
+				"pagePath":"pages/hold/hold",
+				"text":"我执",
+				"iconPath":"static/logo.png",
+				"selectedIconPath":"static/hold-selected.png"
+			}
+		]
+	}
+}

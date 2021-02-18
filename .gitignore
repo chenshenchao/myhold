@@ -1,0 +1,6 @@
+/.*/
+/node_modules/
+/unpackage/
+*.keystore
+*.key.md
+*.db
