@@ -1,7 +1,11 @@
 <script>
+	import { DBBuilder } from '@/common/database.js'
+	
 	export default {
-		onLaunch: function() {
-			console.log('App Launch')
+		async onLaunch() {
+			console.log('App Launch');
+			const builder = new DBBuilder('myhold');
+			await builder.build();
 		},
 		onShow: function() {
 			console.log('App Show')

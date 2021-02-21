@@ -1,19 +1,17 @@
 <template>
-	<view class="plan-search-table">
+	<view class="hold-structure-table">
 		<view class="head">
-			<view class="start-at column">开始时间</view>
-			<view class="alter-at column">跟进时间</view>
-			<view class="status column">状态</view>
+			<view class="start-time column">开始时间</view>
+			<view class="end-time column">结束时间</view>
 		</view>
 		<scroll-view class="body">
 			<view v-for="row in rows" :key="row.id" class="item" @click="onClickRow(row)">
 				<view class="item-head">
-					<view class="start-at column">{{row.start_at}}</view>
-					<view class="alter-at column">{{row.alter_at}}</view>
-					<view class="status column">完成</view>
+					<view class="start-time column">{{row.start_at}}</view>
+					<view class="end-time column">{{row.end_at}}</view>
 				</view>
 				<view class="item-body">
-					{{row.title}}
+					{{row.filename}}
 				</view>
 			</view>
 		</scroll-view>
@@ -22,9 +20,6 @@
 
 <script>
 	export default {
-		data() {
-			return {};
-		},
 		props: {
 			rows: {
 				type: Array,
@@ -35,12 +30,12 @@
 			onClickRow(row) {
 				this.$emit('click-row', row);
 			}
-		}
+		},
 	}
 </script>
 
 <style lang="scss" scoped>
-	.plan-search-table {
+	.hold-structure-table {
 		.column {
 			display: flex;
 			align-items: center;
@@ -48,20 +43,16 @@
 			flex-grow: 0;
 			flex-shrink: 0;
 			box-sizing: border-box;
-
-			&.start-at {
-				width: 39%;
+		
+			&.start-time {
+				width: 50%;
 			}
-
-			&.alter-at {
-				width: 39%;
-			}
-
-			&.status {
-				width: 22%;
+		
+			&.end-time {
+				width: 50%;
 			}
 		}
-
+		
 		.head {
 			display: flex;
 			align-items: center;
@@ -70,7 +61,7 @@
 			padding-bottom: 10rpx;
 			border-bottom: 1rpx solid #ddd;
 		}
-
+		
 		.item {
 			border-bottom: 1rpx solid #eee;
 			

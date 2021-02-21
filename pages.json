@@ -15,6 +15,15 @@
             }
             
         }
+		,{
+		    "path" : "pages/hold/structure",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "结构",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		}
         ,{
             "path" : "pages/star/index",
             "style" :                                                                                    

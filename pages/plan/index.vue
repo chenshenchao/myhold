@@ -4,14 +4,15 @@
 			<plan-search-input v-model="plain"/>
 			<view class="addition-button" @click="onClickAdd">添加</view>
 		</view>
-		<plan-search-table :rows="rows"/>
+		<plan-search-table :rows="rows" @click-row="onClickInfo"/>
 	</view>
 </template>
 
 <script>
-	import page from '@/common/page.js'
+	import page from '@/common/page.js';
+	import {myhold} from '@/common/database.js';
 	import PlanSearchInput from './widget/search-input.vue';
-	import PlanSearchTable from './widget/search-table.vue'
+	import PlanSearchTable from './widget/search-table.vue';
 	
 	export default {
 		components: {
@@ -21,28 +22,27 @@
 		data() {
 			return {
 				plain: null,
-				rows: [{
-					id: 1,
-					start_time: '2021-02-17',
-					alter_time: '2021-02-18',
-					status: '',
-					summary: '完成我执',
-				}, {
-					id: 2,
-					start_time: '2021-02-17',
-					alter_time: '2021-02-18',
-					status: '',
-					summary: '完成我执',
-				}],
+				rows: [],
 			}
 		},
 		methods: {
 			async onClickAdd() {
-				console.log('add')
 				await page.navigateTo({
 					url: 'addition'
 				})
+			},
+			
+			async onClickInfo(row) {
+				await page.navigateTo({
+					url: `information?id=${row.id}`
+				})
 			}
+		},
+		async onLoad() {
+			// this.rows = await myhold.query('SELECT * FROM mh_plan');
+		},
+		async onShow() {
+			this.rows = await myhold.query('SELECT * FROM mh_plan');
 		},
 		mounted() {
 		}

@@ -1,3 +1,5 @@
+import dayjs from 'dayjs';
+
 /**
  * 数据库管理类
  * 
@@ -106,13 +108,46 @@ class DB {
 	}
 }
 
+const db = new DB();
+
+/**
+ * 客户端
+ * 
+ */
+export class DBClient {
+	constructor(name) {
+		this.name = name;
+	}
+	
+	async execute(sql) {
+		return await db.execute(this.name, sql);
+	}
+	
+	async query(sql) {
+		return await db.query(this.name, sql);
+	}
+	
+	async find(sql, defaultValue) {
+		const rows = await this.query(sql);
+		if (rows.length == 0) return defaultValue || null;
+		return rows[0];
+	}
+}
+
+export const myhold = new DBClient('myhold');
+
 /**
  * 数据库构造器。
  * 
  */
 export class DBBuilder {
-	constructor() {
-	    this.db = new DB();
+	/**
+	 * 初始化
+	 * 
+	 * @param {Object} name
+	 */
+	constructor(name) {
+	    this.db = new DBClient(name);
 	}
 	
 	/**
@@ -128,6 +163,32 @@ export class DBBuilder {
 				});
 			}, error => reject(error));
 		});
+	}
+	
+	async applyBuildFile(entry) {
+		// 获取 ID 并验证是否已经执行。
+		const id = Number(entry.name.match(/^\d+/)[0]);
+		const structure = await this.db.query(`
+			SELECT * FROM mh_structure
+			WHERE id = ${id}
+		`);
+		if (structure.length > 0) return true;
+		
+		// 未执行的执行并写入。
+		const startAt = dayjs().format('YYYY-MM-DD HH:mm:ss');
+		const sql = await this.readEntrySQL(entry);
+		await this.db.execute(sql);
+		const endAt = dayjs().format('YYYY-MM-DD HH:mm:ss');
+		await this.db.execute(`
+		INSERT INTO mh_structure
+		(
+			id, filename, start_at, end_at
+		)
+		VALUES
+		(
+			${id}, '${entry.name}', '${startAt}', '${endAt}'
+		)
+		`);
 	}
 	
 	/**
@@ -166,8 +227,12 @@ export class DBBuilder {
 	 */
 	async build() {
 		const structureSQL = await this.readStructureSQL();
-		await this.db.execute('myhold', structureSQL);
+		await this.db.execute(structureSQL);
+		const entries = await this.listBuildFile();
+		for (let entry of entries) {
+			await this.applyBuildFile(entry);
+		}
 	}
 }
 
-export default new DB();
+export default db;

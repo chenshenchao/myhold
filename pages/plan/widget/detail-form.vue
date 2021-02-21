@@ -1,9 +1,10 @@
 <template>
 	<view class="plan-detail-form">
+		<view class="head">
+			<input v-model="plan.title" placeholder="标题"/>
+		</view>
 		<view ref="editor">
-			<view id="toolbar"></view>
-			<editor id="editor" class="ql-container" :placeholder="placeholder" @ready="onEditorReady"></editor>
-			<button type="warn" @tap="undo">撤销</button>
+			<textarea v-model="plan.content"/>
 		</view>
 	</view>
 </template>
@@ -15,18 +16,18 @@
 				placeholder: '开始输入...'
 			};
 		},
-		methods: {
-			onEditorReady() {
-				console.log(this.$refs.editor)
-				uni.createSelectorQuery()
-					.select('#editor')
-					.context((res) => {
-						this.editorCtx = res.context
-					}).exec();
+		props: {
+			plan: {
+				type: Object,
+				default: () => ({}),
 			},
-			undo() {
-				this.editorCtx.undo()
+			steps: {
+				type: Array,
+				default: () => [],
 			}
+		},
+		methods: {
+			
 		}
 	}
 </script>
@@ -34,11 +35,5 @@
 <style lang="scss" scoped>
 	.plan-detail-form {
 		padding: 10px;
-	}
-
-	#editor {
-		width: 100%;
-		height: 300px;
-		background-color: #CCCCCC;
 	}
 </style>
