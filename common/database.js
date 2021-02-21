@@ -106,4 +106,68 @@ class DB {
 	}
 }
 
+/**
+ * 数据库构造器。
+ * 
+ */
+export class DBBuilder {
+	constructor() {
+	    this.db = new DB();
+	}
+	
+	/**
+	 * 列举构造文件。
+	 * 
+	 */
+	async listBuildFile() {
+		return new Promise((resolve, reject) => {
+			plus.io.resolveLocalFileSystemURL('_www/static/database/build', entry => {
+				const directoryReader = entry.createReader();
+				directoryReader.readEntries((entries) => {
+					resolve(entries);
+				});
+			}, error => reject(error));
+		});
+	}
+	
+	/**
+	 * 读取 SQL
+	 * @param {Object} entry
+	 */
+	async readEntrySQL(entry) {
+		return new Promise((resolve, reject) => {
+			entry.file(f => {
+				const reader = new plus.io.FileReader();
+				reader.onloadend = (event) => {
+					resolve(event.target.result);
+				};
+				reader.readAsText(f, 'utf-8');
+			}, error => reject(error));
+		});
+	}
+	
+	/**
+	 * 读取结构表的 DDL SQL
+	 * 
+	 */
+	async readStructureSQL() {
+		return new Promise((resolve, reject) => {
+			plus.io.resolveLocalFileSystemURL('_www/static/database/structure.sql', entry => {
+				this.readEntrySQL(entry)
+					.then(t => resolve(t))
+					.catch(e => reject(e));
+			}, error => reject(error));
+		});
+	}
+	
+	/**
+	 * 构建
+	 * 
+	 */
+	async build() {
+		const structureSQL = await this.readStructureSQL();
+		await this.db.execute('myhold', structureSQL);
+	}
+}
+
 export default new DB();

@@ -2,7 +2,7 @@
 	<view class="plan-search-input">
 		<input v-model="plain"/>
 		<view class="icon">
-			<image src="@/static/loupe.png"/>
+			<image src="@/static/image/loupe.png"/>
 		</view>
 	</view>
 </template>

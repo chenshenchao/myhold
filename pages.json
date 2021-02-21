@@ -7,7 +7,7 @@
 			}
 		}
 	    ,{
-            "path" : "pages/hold/hold",
+            "path" : "pages/hold/index",
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "我执",
@@ -64,22 +64,22 @@
 		"borderStyle":"#222",
 		"list": [
 			{
-				"pagePath":"pages/star/star",
+				"pagePath":"pages/star/index",
 				"text":"星月",
-				"iconPath":"static/star.png",
-				"selectedIconPath":"static/star-selected.png"
+				"iconPath":"static/image/star.png",
+				"selectedIconPath":"static/image/star-selected.png"
 			},
 			{
 				"pagePath":"pages/plan/index",
 				"text": "计划",
-				"iconPath":"static/plan.png",
-				"selectedIconPath":"static/plan-selected.png"
+				"iconPath":"static/image/plan.png",
+				"selectedIconPath":"static/image/plan-selected.png"
 			},
 			{
-				"pagePath":"pages/hold/hold",
+				"pagePath":"pages/hold/index",
 				"text":"我执",
-				"iconPath":"static/logo.png",
-				"selectedIconPath":"static/hold-selected.png"
+				"iconPath":"static/image/hold.png",
+				"selectedIconPath":"static/image/hold-selected.png"
 			}
 		]
 	}
